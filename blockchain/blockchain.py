@@ -38,4 +38,26 @@ class Blockchain:
         encoded_block = json.dumps(block, sort_keys=True).encode() 
         return hashlib.sha256(encoded_block).hexdigest()
     
+    def is_chain_valid(self, chain):
+        prev_block = chain[0]
+        block_index = 1
+        
+        while block_index < len(chain):
+            block = chain[block_index]
+            
+            # 1st check: checks if the previous hash is correct
+            if block['prev_hash'] != self.hash(prev_block):
+                return False
+            
+            # 2nd check: if the hash starts with 4 zeros
+            prev_proof = prev_block['proof']
+            proof = block['proof']
+            hash_operation = hashlib.sha256(str(proof**2 - prev_proof**2).encode()).hexdigest()
+            if hash_operation[:4] != '0000':
+                return false
+            
+            prev_block = block
+            block_index += 1
+            
+        return true
     
