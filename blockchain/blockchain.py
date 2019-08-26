@@ -61,3 +61,5 @@ class Blockchain:
             
         return true
     
+# mining the blockchain
+        
