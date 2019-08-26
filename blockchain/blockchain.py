@@ -27,7 +27,7 @@ class Blockchain:
         while check_proof is False:
             hash_operation = hashlib.sha256(str(new_proof**2 - prev_proof**2).encode()).hexdigest()
             if hash_operation[:4] == '0000':
-                check_proof = true
+                check_proof = True
             else:
                 new_proof += 1
         return new_proof
@@ -54,12 +54,12 @@ class Blockchain:
             proof = block['proof']
             hash_operation = hashlib.sha256(str(proof**2 - prev_proof**2).encode()).hexdigest()
             if hash_operation[:4] != '0000':
-                return false
+                return False
             
             prev_block = block
             block_index += 1
             
-        return true
+        return True
     
 # mining the blockchain
         
@@ -92,3 +92,6 @@ def get_chain():
             'length': len(blockchain.chain)
             }
     return jsonify(response), 200
+
+# running the app
+app.run(host='0.0.0.0', port=5000)
