@@ -67,5 +67,19 @@ def add_transaction():
             'message': f'This transaction will be added to block {index}'}
     return jsonify(response), 201
 
+# decentralize the blockchain
+@app.route('/nodes', methods=['POST'])
+def connect_node():
+    json = request.get_json()
+    nodes = json.get('nodes')
+    if nodes is None:
+        return 'no nodes!', 400
+    for node in nodes:
+        cellcoin.add_node(node)
+    response = {
+                'message': f'All the nodes are connecting',
+                'total_nodes': list(cellcoin.nodes)}
+    return jsonify(response), 201
+
 # running the app
 app.run(host='0.0.0.0', port=5000, debug=True)
