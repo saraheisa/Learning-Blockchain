@@ -3,12 +3,18 @@ import sys
 sys.path.insert(1, '../cryptocurrency')
 from cellcoin import CellCoin
 
+import requests
+
+from uuid import uuid4 # generate random address
 from flask import Flask, jsonify
 
 # mining the blockchain
         
 # create web app
 app = Flask(__name__)
+
+# creating an address for the node on port 5000
+node_address = str(uuid4()).replace('-', '')
 
 # create a blockchain
 cellcoin = CellCoin()
