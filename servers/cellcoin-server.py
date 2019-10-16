@@ -81,5 +81,20 @@ def connect_node():
                 'total_nodes': list(cellcoin.nodes)}
     return jsonify(response), 201
 
+@app.route('/replace_chain', methods=['GET'])
+def replace_chain():
+    if cellcoin.replace_chain():
+        response = {
+                'message': 'The node has different chains so the chain was replaced by the longest one',
+                'new_chain': cellcoin.chain
+                }
+    else:
+        response = {
+                'message': 'All Good! the chain is the longest one',
+                'actual_chain': cellcoin.chain
+                }
+        
+    return jsonify(response), 200
+
 # running the app
 app.run(host='0.0.0.0', port=5000, debug=True)
