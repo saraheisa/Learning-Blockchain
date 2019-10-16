@@ -7,7 +7,7 @@ import requests
 import json
 
 from uuid import uuid4 # generate random address
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 # mining the blockchain
         
