@@ -72,8 +72,8 @@ class CellCoin:
                 'receiver': receiver,
                 'amount': amount})
         # getting the block index for this transaction
-        block_index = self.get_prev_block() + 1
-        return block_index['index']
+        block_index = self.get_prev_block()['index'] + 1
+        return block_index
     
     def add_node(self, address):
         # parse the address first
