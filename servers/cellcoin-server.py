@@ -24,6 +24,8 @@ def mine_block():
     prev_block = cellcoin.get_prev_block()
     proof = cellcoin.proof_of_work(prev_block['proof'])
     prev_hash = cellcoin.hash(prev_block)
+    # reward the miner by some cellcoin
+    cellcoin.add_transaction(sender=node_address, receiver='celestial', amount=1)
     block = cellcoin.create_block(proof, prev_hash)
     
     response = {
@@ -31,7 +33,8 @@ def mine_block():
             'index': block['index'],
             'timestamp': block['timestamp'],
             'prrof': block['proof'],
-            'previous hash': block['prev_hash']
+            'previous hash': block['prev_hash'],
+            'transactions': block['transactions']
             }
     return jsonify(response), 200
     
