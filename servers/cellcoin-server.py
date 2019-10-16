@@ -4,6 +4,7 @@ sys.path.insert(1, '../cryptocurrency')
 from cellcoin import CellCoin
 
 import requests
+import json
 
 from uuid import uuid4 # generate random address
 from flask import Flask, jsonify
@@ -52,6 +53,19 @@ def is_valid():
             'is valid': cellcoin.is_chain_valid(cellcoin.chain)
             }
     return jsonify(response), 200
+
+@app.route('/transactions', methods=['POST'])
+def add_transaction():
+    json = request.get_json()
+    # validate request body
+    transactions_keys = ['sender', 'receiver', 'amount']
+    if not all (key in json for key in transactions_keys):
+        return 'Some data is missing', 400
+    
+    index = cellcoin.add_transaction(json['sender'], json['receiver'], json['amount'])
+    response = {
+            'message': f'This transaction will be added to block {index}'}
+    return jsonify(response), 201
 
 # running the app
 app.run(host='0.0.0.0', port=5000, debug=True)
