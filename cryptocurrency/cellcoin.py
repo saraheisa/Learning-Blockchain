@@ -11,6 +11,7 @@ class CellCoin:
     def __init__ (self):
         self.chain = []
         self.transactions = []
+        self.nodes = set()
         self.create_block(proof=1, prev_hash='0') # create the genesis block
         
     def create_block(self, proof, prev_hash):
@@ -73,3 +74,10 @@ class CellCoin:
         # getting the block index for this transaction
         block_index = self.get_prev_block() + 1
         return block_index['index']
+    
+    def add_node(self, address):
+        # parse the address first
+        parsed_url = urlparse(address)
+        self.nodes.add(parsed_url.netloc)
+        return parsed_url
+    
