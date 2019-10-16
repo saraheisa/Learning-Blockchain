@@ -10,13 +10,16 @@ class CellCoin:
     
     def __init__ (self):
         self.chain = []
+        self.transactions = []
         self.create_block(proof=1, prev_hash='0') # create the genesis block
         
     def create_block(self, proof, prev_hash):
         block = {'index': len(self.chain)+1,
                  'timestamp': str(datetime.datetime.now()),
                  'proof': proof,
-                 'prev_hash': prev_hash}
+                 'prev_hash': prev_hash,
+                 'transactions': self.transactions}
+        self.transactions = []
         self.chain.append(block)
         return block
     
@@ -62,3 +65,11 @@ class CellCoin:
             block_index += 1
             
         return True
+    
+    def add_transaction(self, sender, receiver, amount):
+        self.transactions.append({'sender': sender,
+                'receiver': receiver,
+                'amount': amount})
+        # getting the block index for this transaction
+        block_index = self.get_prev_block() + 1
+        return block_index['index']
